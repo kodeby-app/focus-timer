@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Focus Timer</title>
+  <meta name="description" content="Work in focused blocks with short breaks, keep a small task list and see how much deep work you did. Free, no sign-up.">
+  <meta property="og:title" content="Focus Timer">
+  <meta property="og:description" content="Work in focused blocks with short breaks, keep a small task list and see how much deep work you did. Free, no sign-up.">
+  <meta property="og:image" content="https://focus.kodeby.app/screenshot.png">
+  <meta property="og:url" content="https://focus.kodeby.app">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="favicon.svg" alt="" width="28" height="28">
+      <div>
+        <strong data-i18n="appName">Focus Timer</strong>
+        <span class="tagline" data-i18n="tagline">Free. No sign-up. Nothing leaves your browser.</span>
+      </div>
+    </div>
+    <nav class="actions">
+      <button type="button" id="btn-settings" data-i18n="settings">Settings</button>
+      <select id="lang" aria-label="Language">
+        <option value="en">English</option>
+        <option value="nb">Norsk</option>
+      </select>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="card timer-card">
+      <div class="modes" role="tablist">
+        <button type="button" role="tab" data-mode="focus" data-i18n="m_focus">Focus</button>
+        <button type="button" role="tab" data-mode="short" data-i18n="m_short">Short break</button>
+        <button type="button" role="tab" data-mode="long" data-i18n="m_long">Long break</button>
+      </div>
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 260 260" aria-hidden="true">
+          <circle class="ring-bg" cx="130" cy="130" r="118"></circle>
+          <circle class="ring-fg" id="ring" cx="130" cy="130" r="118"></circle>
+        </svg>
+        <div class="ring-text">
+          <div id="clock" class="clock" aria-live="off">25:00</div>
+          <div id="phase" class="phase"></div>
+        </div>
+      </div>
+      <div id="dots" class="dots" aria-hidden="true"></div>
+      <p id="working" class="working"></p>
+      <div class="controls">
+        <button type="button" id="btn-reset" class="ghost" data-i18n="reset">Reset</button>
+        <button type="button" id="btn-start" class="primary big-btn" data-i18n="start">Start</button>
+        <button type="button" id="btn-skip" class="ghost" data-i18n="skip">Skip</button>
+      </div>
+      <p class="hint keys" data-i18n="keys">Tip: press Space to start or pause.</p>
+    </section>
+
+    <div class="side">
+      <section class="card">
+        <h2 data-i18n="tasksTitle">Tasks</h2>
+        <form id="add-task" class="add-task" autocomplete="off">
+          <input id="task-title" maxlength="120" data-i18n-ph="taskPh" placeholder="What are you working on?" aria-label="Task">
+          <label class="est"><span data-i18n="est">Blocks</span><input id="task-est" type="number" min="1" max="20" value="2"></label>
+          <button type="submit" class="primary" data-i18n="add">Add</button>
+        </form>
+        <ul id="tasks" class="tasks"></ul>
+        <div class="task-foot">
+          <span id="task-sum"></span>
+          <button type="button" id="btn-clear-done" class="ghost small" data-i18n="clearDone">Clear finished</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="statsTitle">Your focus</h2>
+        <div id="stats" class="stats"></div>
+        <div id="week" class="week" aria-hidden="true"></div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="dlg">
+    <form id="settings-form" method="dialog" novalidate>
+      <h2 data-i18n="settings">Settings</h2>
+      <div class="grid">
+        <label><span data-i18n="focusMin">Focus (minutes)</span><input type="number" name="focus" min="1" max="180"></label>
+        <label><span data-i18n="shortMin">Short break (minutes)</span><input type="number" name="short" min="1" max="60"></label>
+        <label><span data-i18n="longMin">Long break (minutes)</span><input type="number" name="long" min="1" max="90"></label>
+        <label><span data-i18n="every">Long break after (focus blocks)</span><input type="number" name="every" min="2" max="12"></label>
+        <label class="inline wide"><input type="checkbox" name="autoBreak"> <span data-i18n="autoBreak">Start breaks by themselves</span></label>
+        <label class="inline wide"><input type="checkbox" name="autoFocus"> <span data-i18n="autoFocus">Start the next focus block by itself</span></label>
+        <label class="inline wide"><input type="checkbox" name="sound"> <span data-i18n="sound">Play a sound when time is up</span></label>
+      </div>
+      <div class="buttons">
+        <button type="button" id="btn-clear-stats" class="left ghost" data-i18n="clearStats">Clear statistics</button>
+        <button type="button" id="btn-cancel" data-i18n="cancel">Cancel</button>
+        <button type="submit" class="primary" data-i18n="save">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="site-footer">
+    <span data-i18n="privacy">Everything stays in this browser. There is no server, no account and no tracking.</span>
+    <span>· <span data-i18n="madeBy">An example app by the Kodeby team.</span> <a href="https://kodeby.app" rel="noopener">kodeby.app</a> · <a href="https://github.com/kodeby-app/focus-timer" rel="noopener" data-i18n="source">Source code</a></span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
